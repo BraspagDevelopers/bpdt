@@ -2,9 +2,11 @@ package configuration
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 
+	"github.com/dimchansky/utfbom"
 	"github.com/jeremywohl/flatten"
 	"muzzammil.xyz/jsonc"
 )
@@ -49,11 +51,12 @@ func jsonToMap(bytes []byte) (result map[string]string, err error) {
 func (b *ConfigurationBuilder) Build() (result map[string]string, err error) {
 	result = make(map[string]string)
 	for _, jf := range b.jsonFiles {
-		var f *os.File
+		var f io.Reader
 		f, err = os.Open(jf)
 		if err != nil {
 			return
 		}
+		f = utfbom.SkipOnly(f)
 
 		var bytes []byte
 		bytes, err = ioutil.ReadAll(f)
