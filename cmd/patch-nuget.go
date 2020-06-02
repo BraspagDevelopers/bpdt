@@ -30,8 +30,9 @@ import (
 )
 
 var patchNugetCmd = &cobra.Command{
-	Use:  "patch-nuget <path> <nugetSource> <username> <password>",
-	Args: cobra.ExactArgs(4),
+	Use:   "patch-nuget <path> <nugetSource> <username> <password>",
+	Short: "Add clear text passwords to a nuget config file",
+	Args:  cobra.ExactArgs(4),
 	Run: func(cmd *cobra.Command, args []string) {
 		path := args[0]
 		source := args[1]

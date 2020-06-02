@@ -32,8 +32,9 @@ import (
 )
 
 var exportEnvCmd = &cobra.Command{
-	Use:  "export-settings",
-	Args: cobra.ExactArgs(0),
+	Use:   "export-settings",
+	Short: "Convert multiples `appsettings.*.json` files to .env file syntax",
+	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 		dir, err := cmd.Flags().GetString("directory")
 		if err != nil {
@@ -68,9 +69,9 @@ var exportEnvCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(exportEnvCmd)
-	exportEnvCmd.Flags().StringP("directory", "d", ".", "Determines where the files will be searched for")
+	exportEnvCmd.Flags().StringP("directory", "d", ".", "Directory where the files will be looked for")
 	exportEnvCmd.Flags().StringArrayP("file", "f", []string{
 		"appsettings.json",
 		"appsettings.Development.json",
-	}, "Determines the files that will be used as input")
+	}, "Files that will be used as input")
 }
