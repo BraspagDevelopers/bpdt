@@ -31,7 +31,7 @@ import (
 )
 
 var exportEnvCmd = &cobra.Command{
-	Use:     "export-env",
+	Use:     "export-settings",
 	Aliases: []string{"ee"},
 	Run: func(cmd *cobra.Command, args []string) {
 		builder := configuration.New()

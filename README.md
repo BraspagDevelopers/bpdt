@@ -5,10 +5,10 @@ Braspag Deploy Tools
 Collection of tools to ease the deploy of applications
 
 
-## `bpdt export-env`
+## `bpdt export-settings`
 Convert multiples `appsettings.*.json` files to a `.env` file.
 
 ### Usage
 ```
-bpdt export-env -d <directory> -f <file1> -f <file2>
+bpdt export-settings -d <directory> -f <file1> -f <file2>
 ```
