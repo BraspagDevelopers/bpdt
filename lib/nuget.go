@@ -55,7 +55,7 @@ func openReadWrite(path string, function func(io.Reader, io.Writer) error) error
 		return err
 	}
 
-	writer, err := os.OpenFile(path, os.O_CREATE, 0)
+	writer, err := os.OpenFile(path, os.O_WRONLY|os.O_TRUNC, 0)
 	if err != nil {
 		return stacktrace.Propagate(err, "Error opening file for writing")
 	}
