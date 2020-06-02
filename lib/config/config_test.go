@@ -1,6 +1,7 @@
-package lib
+package config
 
 import (
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -8,12 +9,21 @@ import (
 )
 
 func TestExport(t *testing.T) {
-	config, err := New().
-		AddJsonFile("file1.json").
-		AddJsonFile("file2.json").
-		Build()
+	config := Configuration{}
 
-	require.NoError(t, err, "Failed to build config")
+	file1, err := os.Open("file1.json")
+	require.NoError(t, err, "Could not open file1.json")
+	defer file1.Close()
+
+	file2, err := os.Open("file2.json")
+	require.NoError(t, err, "Could not open file2.json")
+	defer file1.Close()
+
+	err = config.AddJsonReader(file1)
+	require.NoError(t, err, "Failed to add file1")
+
+	err = config.AddJsonReader(file2)
+	require.NoError(t, err, "Failed to add file2")
 
 	expected := map[string]string{
 		"String01":       "new_sv01",

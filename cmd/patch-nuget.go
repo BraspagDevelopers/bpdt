@@ -23,54 +23,29 @@ package cmd
 
 import (
 	"fmt"
-	"io"
 	"os"
-	"path"
 
 	"github.com/BraspagDevelopers/bpdt/lib"
 	"github.com/spf13/cobra"
 )
 
-var exportEnvCmd = &cobra.Command{
-	Use:  "export-settings",
-	Args: cobra.ExactArgs(0),
+var patchNugetCmd = &cobra.Command{
+	Use:  "patch-nuget <path> <nugetSource> <username> <password>",
+	Args: cobra.ExactArgs(4),
 	Run: func(cmd *cobra.Command, args []string) {
-		dir, err := cmd.Flags().GetString("directory")
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err.Error())
-			os.Exit(1)
-		}
+		path := args[0]
+		source := args[1]
+		username := args[2]
+		password := args[3]
 
-		filenames, err := cmd.Flags().GetStringArray("file")
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err.Error())
-			os.Exit(2)
-		}
-
-		readers := make([]io.Reader, len(filenames))
-		for i, jsonFileName := range filenames {
-			file, err := os.Open(path.Join(dir, jsonFileName))
-			if err != nil {
-				fmt.Fprintln(os.Stderr, err.Error())
-				os.Exit(3)
-			}
-			defer file.Close()
-			readers[i] = file
-		}
-
-		lib.ExportSettings(readers, os.Stdout)
+		err := lib.PatchNugetFile(path, source, username, password)
 		if err != nil {
 			fmt.Fprint(os.Stderr, err.Error())
-			os.Exit(4)
+			os.Exit(1)
 		}
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(exportEnvCmd)
-	exportEnvCmd.Flags().StringP("directory", "d", ".", "Determines where the files will be searched for")
-	exportEnvCmd.Flags().StringArrayP("file", "f", []string{
-		"appsettings.json",
-		"appsettings.Development.json",
-	}, "Determines the files that will be used as input")
+	rootCmd.AddCommand(patchNugetCmd)
 }
