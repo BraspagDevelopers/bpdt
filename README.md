@@ -30,19 +30,19 @@ curl -sf https://gobinaries.com/BraspagDevelopers/bpdt | PREFIX=/tmp sh
 go get github.com/BraspagDevelopers/bpdt
 ```
 
-### Usage
-#### `bpdt export-settings`
+## Usage
+### `bpdt export-settings`
 Convert multiples `appsettings.*.json` files to `.env` file syntax
 
 ```
 bpdt export-settings [-d <dir>] -f <file1> -f <file2>
 ```
 
-###### Flags
+#### Flags
 - **`--directory`, `-d`:** Directory where the files will be looked for
 - **`--file`, `-f`:** Files that will be used as input
 
-##### `bpdt patch-nuget`
+### `bpdt patch-nuget`
 Add clear text passwords to a nuget config file
 
 ```
