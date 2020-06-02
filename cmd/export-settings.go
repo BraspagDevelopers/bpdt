@@ -26,7 +26,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/BraspagDevelopers/bpdt/configuration"
+	"github.com/BraspagDevelopers/bpdt/lib"
 	"github.com/spf13/cobra"
 )
 
@@ -34,7 +34,7 @@ var exportEnvCmd = &cobra.Command{
 	Use:     "export-settings",
 	Aliases: []string{"ee"},
 	Run: func(cmd *cobra.Command, args []string) {
-		builder := configuration.New()
+		builder := lib.New()
 		dir, err := cmd.Flags().GetString("directory")
 		if err != nil {
 			fmt.Fprint(os.Stderr, err.Error())
