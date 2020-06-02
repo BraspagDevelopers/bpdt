@@ -1,5 +1,5 @@
 /*
-Copyright © 2020 NAME HERE andregsilv@gmail.com
+Copyright © 2020 ANDRE SOARES <andregsilv@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,8 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-
 	"github.com/spf13/cobra"
+	"os"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
