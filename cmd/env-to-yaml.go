@@ -29,7 +29,8 @@ import (
 )
 
 var mergeYamlCmd = &cobra.Command{
-	Use: "env-to-yaml <.env-file-path> <yaml-file-path>",
+	Use:   "env-to-yaml <.env-file-path> <yaml-file-path>",
+	Short: "Add entries to a YAML element using a .env file as input",
 	Aliases: []string{
 		"envtoyaml",
 		"env2yaml",
