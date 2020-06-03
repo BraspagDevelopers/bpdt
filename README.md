@@ -48,6 +48,11 @@ Add clear text passwords to a nuget config file
 ```bash
 bpdt export-nuget <path> <nugetSource> <username> <password>
 ```
+#### Arguments
+1. **`<path>`:** Path of the nuget config file
+2. **`<nugetSource>`:** Nuget source to which add the credentials
+3. **`<username>`:** Username
+4. **`<password>`:** Password
 
 ### `bpdt env-to-yaml`
 Add entries to a YAML element using a .env file as input
