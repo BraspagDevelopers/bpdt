@@ -22,25 +22,40 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"path"
+
 	"github.com/BraspagDevelopers/bpdt/lib"
 	"github.com/spf13/cobra"
 )
 
-var patchNugetCmd = &cobra.Command{
-	Use:   "patch-nuget <path> <nugetSource> <username> <password>",
-	Short: "Add clear text passwords to a nuget config file",
-	Args:  cobra.ExactArgs(4),
+var mergeYamlCmd = &cobra.Command{
+	Use:   "env-to-yaml <.env-file-path> <yaml-file-path>",
+	Short: "Add entries to a YAML element using a .env file as input",
+	Aliases: []string{
+		"envtoyaml",
+		"env2yaml",
+	},
+	Args: cobra.ExactArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
-		path := args[0]
-		source := args[1]
-		username := args[2]
-		password := args[3]
+		envpath := args[0]
+		yamlpath := args[1]
 
-		err := lib.PatchNugetFile(path, source, username, password)
+		dir, err := cmd.Flags().GetString("directory")
+		handleError(err)
+
+		ypath, err := cmd.Flags().GetString("ypath")
+		handleError(err)
+
+		err = lib.EnvToYamlFile(path.Join(dir, envpath), path.Join(dir, yamlpath), ypath)
 		handleError(err)
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(patchNugetCmd)
+	rootCmd.AddCommand(mergeYamlCmd)
+	mergeYamlCmd.Flags().String("ypath", "spec.template.spec.containers.0.env", "A period separated string indicating where in the YAML the variables should be appended")
+	mergeYamlCmd.Flags().StringP("directory", "d", "", "Directory where the files will be looked for")
+
+	// mergeYamlCmd.Flags().StringP("name-key", "N", "name", "Specifies the key of the name of each entry")
+	// mergeYamlCmd.Flags().StringP("value-key", "V", "value", "Specifies the key of the name of each entry")
 }
