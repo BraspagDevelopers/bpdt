@@ -22,7 +22,6 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
 	"io"
 	"os"
 	"path"
@@ -37,39 +36,28 @@ var exportEnvCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 		dir, err := cmd.Flags().GetString("directory")
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err.Error())
-			os.Exit(1)
-		}
+		handleError(err)
 
 		filenames, err := cmd.Flags().GetStringArray("file")
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err.Error())
-			os.Exit(2)
-		}
+		handleError(err)
 
 		readers := make([]io.Reader, len(filenames))
 		for i, jsonFileName := range filenames {
 			file, err := os.Open(path.Join(dir, jsonFileName))
-			if err != nil {
-				fmt.Fprintln(os.Stderr, err.Error())
-				os.Exit(3)
-			}
+			handleError(err)
+
 			defer file.Close()
 			readers[i] = file
 		}
 
 		lib.ExportSettings(readers, os.Stdout)
-		if err != nil {
-			fmt.Fprint(os.Stderr, err.Error())
-			os.Exit(4)
-		}
+		handleError(err)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(exportEnvCmd)
-	exportEnvCmd.Flags().StringP("directory", "d", ".", "Directory where the files will be looked for")
+	exportEnvCmd.Flags().StringP("directory", "d", "", "Directory where the files will be looked for")
 	exportEnvCmd.Flags().StringArrayP("file", "f", []string{
 		"appsettings.json",
 		"appsettings.Development.json",

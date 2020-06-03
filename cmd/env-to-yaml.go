@@ -22,32 +22,39 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
-	"os"
+	"path"
 
 	"github.com/BraspagDevelopers/bpdt/lib"
 	"github.com/spf13/cobra"
 )
 
 var mergeYamlCmd = &cobra.Command{
-	Use: "env-to-yaml",
+	Use: "env-to-yaml <.env-file-path> <yaml-file-path>",
 	Aliases: []string{
 		"envtoyaml",
 		"env2yaml",
 	},
 	Args: cobra.ExactArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
-		envFilename := args[0]
-		deploymentFilename := args[1]
+		envpath := args[0]
+		yamlpath := args[1]
 
-		err := lib.EnvToYamlFile(envFilename, deploymentFilename)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err.Error())
-			os.Exit(1)
-		}
+		dir, err := cmd.Flags().GetString("directory")
+		handleError(err)
+
+		ypath, err := cmd.Flags().GetString("ypath")
+		handleError(err)
+
+		err = lib.EnvToYamlFile(path.Join(dir, envpath), path.Join(dir, yamlpath), ypath)
+		handleError(err)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(mergeYamlCmd)
+	mergeYamlCmd.Flags().String("ypath", "spec.template.spec.containers.0.env", "A period separated string indicating where in the YAML the variables should be appended")
+	mergeYamlCmd.Flags().StringP("directory", "d", "", "Directory where the files will be looked for")
+
+	// mergeYamlCmd.Flags().StringP("name-key", "N", "name", "Specifies the key of the name of each entry")
+	// mergeYamlCmd.Flags().StringP("value-key", "V", "value", "Specifies the key of the name of each entry")
 }

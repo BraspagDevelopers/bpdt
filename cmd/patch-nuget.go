@@ -22,9 +22,6 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/BraspagDevelopers/bpdt/lib"
 	"github.com/spf13/cobra"
 )
@@ -40,10 +37,7 @@ var patchNugetCmd = &cobra.Command{
 		password := args[3]
 
 		err := lib.PatchNugetFile(path, source, username, password)
-		if err != nil {
-			fmt.Fprint(os.Stderr, err.Error())
-			os.Exit(1)
-		}
+		handleError(err)
 	},
 }
 

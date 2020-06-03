@@ -3,6 +3,7 @@ package lib
 import (
 	"fmt"
 	"io"
+	"os"
 	"strconv"
 	"strings"
 
@@ -124,6 +125,13 @@ func EnvToYaml(r, envr io.Reader, w io.Writer, ypath string) error {
 	return nil
 }
 
-func EnvToYamlFile(envFilename, deploymentFilename string) error {
-	return nil
+func EnvToYamlFile(envFilename, deploymentFilename, ypath string) error {
+	envReader, err := os.Open(envFilename)
+	if err != nil {
+		return stacktrace.Propagate(err, "Could not open env file")
+	}
+
+	return readWrite(deploymentFilename, func(r io.Reader, w io.Writer) error {
+		return EnvToYaml(r, envReader, w, ypath)
+	})
 }
