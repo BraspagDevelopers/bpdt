@@ -28,12 +28,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var mergeYamlCmd = &cobra.Command{
+var envToYamlCmd = &cobra.Command{
 	Use:   "env-to-yaml <.env-file-path> <yaml-file-path>",
 	Short: "Add entries to a YAML element using a .env file as input",
 	Aliases: []string{
 		"envtoyaml",
 		"env2yaml",
+		"e2y",
 	},
 	Args: cobra.ExactArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
@@ -52,9 +53,9 @@ var mergeYamlCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(mergeYamlCmd)
-	mergeYamlCmd.Flags().String("ypath", "spec.template.spec.containers.0.env", "A period separated string indicating where in the YAML the variables should be appended")
-	mergeYamlCmd.Flags().StringP("directory", "d", "", "Directory where the files will be looked for")
+	rootCmd.AddCommand(envToYamlCmd)
+	envToYamlCmd.Flags().String("ypath", "spec.template.spec.containers.0.env", "A period separated string indicating where in the YAML the variables should be appended")
+	envToYamlCmd.Flags().StringP("directory", "d", "", "Directory where the files will be looked for")
 
 	// mergeYamlCmd.Flags().StringP("name-key", "N", "name", "Specifies the key of the name of each entry")
 	// mergeYamlCmd.Flags().StringP("value-key", "V", "value", "Specifies the key of the name of each entry")

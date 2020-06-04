@@ -115,7 +115,8 @@ func ReferenceSecrets(r io.Reader, w io.Writer, ypath, secretname, prefix, suffi
 	return nil
 }
 
-type secretsYaml struct {
-	name string
-	keys map[string]string
+func ReferenceSecretsFile(path, ypath, secretname, prefix, suffix string) error {
+	return readWrite(path, func(reader io.Reader, writer io.Writer) error {
+		return ReferenceSecrets(reader, writer, ypath, secretname, prefix, suffix)
+	})
 }
