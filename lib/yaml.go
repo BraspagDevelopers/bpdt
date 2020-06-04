@@ -85,6 +85,7 @@ func setByPath(y interface{}, path string, value interface{}) error {
 	return nil
 }
 
+// EnvToYaml fill some yaml node with entries from and .env-formatted file
 func EnvToYaml(r, envr io.Reader, w io.Writer, ypath string) error {
 	var doc interface{}
 	decoder := yaml.NewDecoder(r)
@@ -125,6 +126,8 @@ func EnvToYaml(r, envr io.Reader, w io.Writer, ypath string) error {
 	return nil
 }
 
+// EnvToYaml fill some yaml node with entries from and .env-formatted file.
+// Reads and writes directly into files, instead of readers and writers.
 func EnvToYamlFile(envFilename, deploymentFilename, ypath string) error {
 	envReader, err := os.Open(envFilename)
 	if err != nil {
