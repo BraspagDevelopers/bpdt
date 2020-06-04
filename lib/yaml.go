@@ -119,23 +119,3 @@ type secretsYaml struct {
 	name string
 	keys map[string]string
 }
-
-func LoadSecretsYaml(r io.Reader) (result secretsYaml, err error) {
-	d := yaml.NewDecoder(r)
-	var data struct {
-		Metadata struct {
-			Name string
-		}
-		Data map[string]string
-	}
-	err = d.Decode(&data)
-	if err != nil {
-		err = stacktrace.Propagate(err, "could not parse yaml")
-		return
-	}
-	result = secretsYaml{
-		name: data.Metadata.Name,
-		keys: data.Data,
-	}
-	return
-}

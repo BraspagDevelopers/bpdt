@@ -108,24 +108,3 @@ items:
 	require.NotEmpty(t, actual)
 	assert.EqualValues(t, expected, actual, "yaml should match")
 }
-
-func TestLoadSecretsFromYaml(t *testing.T) {
-	r := strings.NewReader(`
-metadata:
-  name: secretName0001
-data:
-  key1: value1
-  key2: value2
-  key3: 3
-`)
-
-	actual, err := LoadSecretsYaml(r)
-	require.NoError(t, err)
-	assert.EqualValues(t, "secretName0001", actual.name)
-	expectedKeys := map[string]string{
-		"key1": "value1",
-		"key2": "value2",
-		"key3": "3",
-	}
-	assert.EqualValues(t, expectedKeys, actual.keys)
-}
