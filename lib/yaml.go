@@ -5,83 +5,12 @@ import (
 	"io"
 	"os"
 	"regexp"
-	"strconv"
-	"strings"
 
 	"github.com/joho/godotenv"
 	"github.com/mitchellh/mapstructure"
 	"github.com/palantir/stacktrace"
 	"gopkg.in/yaml.v3"
 )
-
-func getByPath(y interface{}, path string) (interface{}, error) {
-	if path == "" {
-		return y, nil
-	}
-
-	parts := strings.SplitN(path, ".", 2)
-	key := parts[0]
-	subkey := ""
-	if len(parts) > 1 {
-		subkey = parts[1]
-	}
-
-	switch item := y.(type) {
-	case map[string]interface{}:
-		val, hasKey := item[key]
-		if !hasKey {
-			return nil, fmt.Errorf(key)
-		}
-		return getByPath(val, subkey)
-	case []interface{}:
-		index, err := strconv.Atoi(key)
-		if err != nil {
-			return nil, fmt.Errorf("not an index: %s", parts[0])
-		}
-		val := item[index]
-		return getByPath(val, subkey)
-	default:
-		return nil, fmt.Errorf("unknown type")
-	}
-}
-
-func setByPath(y interface{}, path string, value interface{}) error {
-	if path == "" {
-		return fmt.Errorf("Could not set the root")
-	}
-
-	parts := strings.SplitN(path, ".", 2)
-	key := parts[0]
-	subkey := ""
-	if len(parts) > 1 {
-		subkey = parts[1]
-	}
-
-	switch item := y.(type) {
-	case map[string]interface{}:
-		if subkey != "" {
-			val, hasKey := item[key]
-			if !hasKey {
-				return fmt.Errorf(key)
-			}
-			return setByPath(val, subkey, value)
-		}
-		item[key] = value
-	case []interface{}:
-		index, err := strconv.Atoi(key)
-		if err != nil {
-			return fmt.Errorf("not an index: %s", parts[0])
-		}
-		if subkey != "" {
-			val := item[index]
-			return setByPath(val, subkey, value)
-		}
-		item[index] = value
-	default:
-		return fmt.Errorf("unknown type")
-	}
-	return nil
-}
 
 // EnvToYaml fill some yaml node with entries from and .env-formatted file
 func EnvToYaml(r, envr io.Reader, w io.Writer, ypath string) error {
@@ -97,7 +26,7 @@ func EnvToYaml(r, envr io.Reader, w io.Writer, ypath string) error {
 		return stacktrace.Propagate(err, "could not parse env")
 	}
 
-	section, err := getByPath(doc, ypath)
+	section, err := yamlGetByPath(doc, ypath)
 	if err != nil {
 		return stacktrace.Propagate(err, "could find path on yaml")
 	}
@@ -113,7 +42,7 @@ func EnvToYaml(r, envr io.Reader, w io.Writer, ypath string) error {
 		})
 	}
 
-	err = setByPath(doc, ypath, sectionMap)
+	err = yamlSetByPath(doc, ypath, sectionMap)
 
 	encoder := yaml.NewEncoder(w)
 	err = encoder.Encode(&doc)
@@ -137,12 +66,7 @@ func EnvToYamlFile(envFilename, yamlFilename, ypath string) error {
 	})
 }
 
-type secretsYaml struct {
-	name string
-	keys map[string]string
-}
-
-func ReferenceSecrets(r io.Reader, w io.Writer, ypath string, secretname, prefix, suffix string) error {
+func ReferenceSecrets(r io.Reader, w io.Writer, ypath, secretname, prefix, suffix string) error {
 	d := yaml.NewDecoder(r)
 	var doc interface{}
 	err := d.Decode(&doc)
@@ -160,7 +84,7 @@ func ReferenceSecrets(r io.Reader, w io.Writer, ypath string, secretname, prefix
 			} `yaml:"secretKeyRef"`
 		} `yaml:"valueFrom,omitempty"`
 	}
-	node, err := getByPath(doc, ypath)
+	node, err := yamlGetByPath(doc, ypath)
 	var data []T
 	err = mapstructure.Decode(node, &data)
 	if err != nil {
@@ -179,7 +103,7 @@ func ReferenceSecrets(r io.Reader, w io.Writer, ypath string, secretname, prefix
 		}
 	}
 	e := yaml.NewEncoder(w)
-	err = setByPath(doc, ypath, data)
+	err = yamlSetByPath(doc, ypath, data)
 	if err != nil {
 		return stacktrace.Propagate(err, "could set the new value")
 	}
@@ -189,6 +113,11 @@ func ReferenceSecrets(r io.Reader, w io.Writer, ypath string, secretname, prefix
 		return stacktrace.Propagate(err, "could not serialize yaml")
 	}
 	return nil
+}
+
+type secretsYaml struct {
+	name string
+	keys map[string]string
 }
 
 func LoadSecretsYaml(r io.Reader) (result secretsYaml, err error) {
