@@ -60,8 +60,8 @@ items:
 func TestReferenceSecrets(t *testing.T) {
 
 	const (
-		secretKeyPrefix = "#<"
-		secretKeySuffix = ">#"
+		secretKeyPrefix = "#{"
+		secretKeySuffix = "}#"
 		secretKey       = "secret_good"
 		secretName      = "my_secret_01"
 	)
@@ -73,11 +73,11 @@ items:
       - name: var01
         value: value_1
       - name: var02
-        value: '#<secret_good>#'
+        value: '#{secret_good}#'
       - name: var03
-        value: '#<secret_bad>#'
-      #- name: var04
-      #  value: 'word #<secret_good># word'
+        value: '#notsecret{secret_bad}#'
+      - name: var04
+        value: 'word #{secret_good}# word'
 `)
 
 	var buffer bytes.Buffer
@@ -87,7 +87,7 @@ items:
 			secretKey: "abcde",
 		},
 	}
-	err := ReferenceSecrets(r, &buffer, "items.0.fields", secrets)
+	err := ReferenceSecrets(r, &buffer, "items.0.fields", secrets, secretKeyPrefix, secretKeySuffix)
 	require.NoError(t, err, "could not reference secrets in yaml")
 
 	var expected interface{}
@@ -103,9 +103,9 @@ items:
             name: my_secret_01
             key: secret_good
       - name: var03
-        value: '#<secret_bad>#'
-      #- name: var04
-      #  value: 'word #<secret_good># word'
+        value: '#notsecret{secret_bad}#'
+      - name: var04
+        value: 'word #{secret_good}# word'
 `), &expected)
 	require.NoError(t, err, "could not unmarshall expected yaml")
 	require.NotEmpty(t, expected)

@@ -142,7 +142,7 @@ type secretsYaml struct {
 	keys map[string]string
 }
 
-func ReferenceSecrets(r io.Reader, w io.Writer, ypath string, s secretsYaml) error {
+func ReferenceSecrets(r io.Reader, w io.Writer, ypath string, s secretsYaml, prefix, suffix string) error {
 	d := yaml.NewDecoder(r)
 	var doc interface{}
 	err := d.Decode(&doc)
@@ -168,7 +168,7 @@ func ReferenceSecrets(r io.Reader, w io.Writer, ypath string, s secretsYaml) err
 	}
 
 	for i, item := range data {
-		p := regexp.MustCompile("#<(.*)>#")
+		p := regexp.MustCompile(fmt.Sprintf("^%s(.*)%s$", prefix, suffix))
 		matches := p.FindStringSubmatch(item.Value)
 		if matches != nil {
 			item.Value = ""
