@@ -142,7 +142,7 @@ type secretsYaml struct {
 	keys map[string]string
 }
 
-func ReferenceSecrets(r io.Reader, w io.Writer, ypath string, s secretsYaml, prefix, suffix string) error {
+func ReferenceSecrets(r io.Reader, w io.Writer, ypath string, secretname, prefix, suffix string) error {
 	d := yaml.NewDecoder(r)
 	var doc interface{}
 	err := d.Decode(&doc)
@@ -172,7 +172,7 @@ func ReferenceSecrets(r io.Reader, w io.Writer, ypath string, s secretsYaml, pre
 		matches := p.FindStringSubmatch(item.Value)
 		if matches != nil {
 			item.Value = ""
-			item.ValueFrom.SecretKeyRef.Name = s.name
+			item.ValueFrom.SecretKeyRef.Name = secretname
 			item.ValueFrom.SecretKeyRef.Key = matches[1]
 
 			data[i] = item
