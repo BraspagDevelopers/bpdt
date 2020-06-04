@@ -70,14 +70,14 @@ func TestReferenceSecrets(t *testing.T) {
 items:
   - name: name of item
     fields:
-    #   - name: var01
-    #     value: value_1
+      - name: var01
+        value: value_1
       - name: var02
         value: '#<secret_good>#'
-    #   - name: var03
-    #     value: '#<secret_bad>#'
-    #   - name: var04
-    #     value: 'word #<secret_good># word'
+      - name: var03
+        value: '#<secret_bad>#'
+      #- name: var04
+      #  value: 'word #<secret_good># word'
 `)
 
 	var buffer bytes.Buffer
@@ -95,17 +95,17 @@ items:
 items:
   - name: name of item
     fields:
-    #   - name: var01
-    #     value: value_1
+      - name: var01
+        value: value_1
       - name: var02
         valueFrom:
           secretKeyRef:
             name: my_secret_01
             key: secret_good
-    #   - name: var03
-    #     value: '#<secret_bad>#'
-    #   - name: var04
-    #     value: 'word #<secret_good># word'
+      - name: var03
+        value: '#<secret_bad>#'
+      #- name: var04
+      #  value: 'word #<secret_good># word'
 `), &expected)
 	require.NoError(t, err, "could not unmarshall expected yaml")
 	require.NotEmpty(t, expected)
