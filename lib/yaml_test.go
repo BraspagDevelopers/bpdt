@@ -79,12 +79,6 @@ items:
 `)
 
 	var buffer bytes.Buffer
-	// secrets := secretsYaml{
-	// 	name: secretName,
-	// 	keys: map[string]string{
-	// 		secretKey: "abcde",
-	// 	},
-	// }
 	err := ReferenceSecrets(r, &buffer, "items.0.fields", "my_secret_01", secretKeyPrefix, secretKeySuffix)
 	require.NoError(t, err, "could not reference secrets in yaml")
 
