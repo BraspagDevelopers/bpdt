@@ -6,6 +6,7 @@ import (
 	"io"
 
 	"github.com/BraspagDevelopers/bpdt/lib/config"
+	"github.com/joho/godotenv"
 	"github.com/palantir/stacktrace"
 )
 
@@ -22,6 +23,11 @@ func ExportSettings(inputs []io.Reader, output io.Writer) error {
 	for k, v := range config {
 		fmt.Fprintln(&buffer, fmt.Sprintf("%s=%s", k, v))
 	}
-	output.Write(buffer.Bytes())
+
+	str, err := godotenv.Marshal(config)
+	if err != nil {
+		return stacktrace.Propagate(err, "could not write error")
+	}
+	output.Write([]byte(str))
 	return nil
 }
