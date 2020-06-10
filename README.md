@@ -27,7 +27,7 @@ curl -sf https://gobinaries.com/BraspagDevelopers/bpdt | PREFIX=/tmp sh
 
 ### `go get` method
 ```bash
-go get github.com/BraspagDevelopers/bpdt
+go get -u github.com/BraspagDevelopers/bpdt
 ```
 
 ## Usage
