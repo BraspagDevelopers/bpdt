@@ -8,7 +8,7 @@ Collection of tools to ease the deploy of applications
 
 ## Installation
 
-### [gobinaries.com](gobinaries.com) method
+### [gobinaries.com](https://gobinaries.com) method
 
 Install to `/usr/local/bin`
 ```bash
@@ -27,7 +27,7 @@ curl -sf https://gobinaries.com/BraspagDevelopers/bpdt | PREFIX=/tmp sh
 
 ### `go get` method
 ```bash
-go get github.com/BraspagDevelopers/bpdt
+go get -u github.com/BraspagDevelopers/bpdt
 ```
 
 ## Usage
