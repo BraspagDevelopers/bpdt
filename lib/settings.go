@@ -1,12 +1,10 @@
 package lib
 
 import (
-	"bytes"
-	"fmt"
 	"io"
 
 	"github.com/BraspagDevelopers/bpdt/lib/config"
-	"github.com/joho/godotenv"
+	"github.com/mniak/godotenv"
 	"github.com/palantir/stacktrace"
 )
 
@@ -18,10 +16,6 @@ func ExportSettings(inputs []io.Reader, output io.Writer) error {
 		if err != nil {
 			return stacktrace.Propagate(err, "Could read configuration from %s", input)
 		}
-	}
-	var buffer bytes.Buffer
-	for k, v := range config {
-		fmt.Fprintln(&buffer, fmt.Sprintf("%s=%s", k, v))
 	}
 
 	str, err := godotenv.Marshal(config)
