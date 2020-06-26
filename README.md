@@ -8,7 +8,7 @@ Collection of tools to ease the deploy of applications
 
 ## Installation
 
-### [gobinaries.com](gobinaries.com) method
+### [gobinaries.com](https://gobinaries.com) method
 
 Install to `/usr/local/bin`
 ```bash
