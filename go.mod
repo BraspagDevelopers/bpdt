@@ -7,7 +7,7 @@ require (
 	github.com/dimchansky/utfbom v1.1.0
 	github.com/jeremywohl/flatten v1.0.1
 	github.com/joho/godotenv v1.3.0
-	github.com/mitchellh/mapstructure v1.3.1
+	github.com/mitchellh/mapstructure v1.3.3
 	github.com/mniak/godotenv v1.3.1
 	github.com/palantir/stacktrace v0.0.0-20161112013806-78658fd2d177
 	github.com/spf13/cobra v1.0.0
