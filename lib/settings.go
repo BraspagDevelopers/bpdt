@@ -4,7 +4,7 @@ import (
 	"io"
 
 	"github.com/BraspagDevelopers/bpdt/lib/config"
-	"github.com/mniak/godotenv"
+	"github.com/joho/godotenv"
 	"github.com/palantir/stacktrace"
 )
 
