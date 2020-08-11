@@ -1,3 +1,8 @@
+![License](https://img.shields.io/github/license/BraspagDevelopers/bpdt.svg?style=flat-square)
+![Tag](https://img.shields.io/github/tag/BraspagDevelopers/bpdt.svg?style=flat-square)
+[![Go Report Card](https://goreportcard.com/badge/github.com/BraspagDevelopers/bpdt?style-flat-square)](https://goreportcard.com/report/github.com/BraspagDevelopers/bpdt)
+
+
 `bpdt` - Braspag Deploy Tools
 ==========================
 **Work in Progress**
