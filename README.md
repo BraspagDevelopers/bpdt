@@ -17,7 +17,7 @@ Collection of tools to ease the deploy of applications
 
 Install to `/usr/local/bin`
 ```bash
-curl -sf https://gobinaries.com/BraspagDevelopers/bphc | sh
+curl -sf https://gobinaries.com/BraspagDevelopers/bpdt | sh
 ```
 
 You can also specify a custom directory where to download the binary file
