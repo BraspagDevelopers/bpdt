@@ -51,7 +51,7 @@ bpdt export-settings [-d <dir>] -f <file1> -f <file2>
 Add clear text passwords to a nuget config file
 
 ```bash
-bpdt export-nuget <path> <nugetSource> <username> <password>
+bpdt patch-nuget <path> <nugetSource> <username> <password>
 ```
 #### Arguments
 1. **`<path>`:** Path of the nuget config file
