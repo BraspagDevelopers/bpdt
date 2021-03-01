@@ -43,11 +43,11 @@ items:
 	}
 	orderData := func(data *Data) {
 		sort.SliceStable(data.Items, func(i, j int) bool {
-			return strings.Compare(data.Items[i].Name, data.Items[j].Name) <= 0
+			return data.Items[i].Name < data.Items[j].Name
 		})
 		for _, item := range data.Items {
 			sort.SliceStable(item.Fields, func(i, j int) bool {
-				return strings.Compare(item.Fields[i].Name, item.Fields[j].Name) <= 0
+				return item.Fields[i].Name < item.Fields[j].Name
 			})
 		}
 	}
