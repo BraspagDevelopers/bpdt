@@ -2,6 +2,7 @@ package lib
 
 import (
 	"bytes"
+	"sort"
 	"strings"
 	"testing"
 
@@ -31,7 +32,27 @@ items:
 	err := EnvToYaml(yamlReader, envReader, &buffer, "items.1.fields")
 	require.NoError(t, err, "could not merge yaml")
 
-	var expected interface{}
+	type Data struct {
+		Items []struct {
+			Name   string
+			Fields []struct {
+				Name  string
+				Value string
+			}
+		}
+	}
+	orderData := func(data *Data) {
+		sort.SliceStable(data.Items, func(i, j int) bool {
+			return strings.Compare(data.Items[i].Name, data.Items[j].Name) < 0
+		})
+		for _, item := range data.Items {
+			sort.SliceStable(item.Fields, func(i, j int) bool {
+				return strings.Compare(item.Fields[i].Name, item.Fields[j].Name) < 0
+			})
+		}
+	}
+
+	var expected Data
 	err = yaml.Unmarshal([]byte(`
 items:
   - name: first item
@@ -49,11 +70,12 @@ items:
 	require.NoError(t, err, "could not unmarshall expected yaml")
 	require.NotEmpty(t, expected)
 
-	var actual interface{}
+	var actual Data
 	err = yaml.Unmarshal(buffer.Bytes(), &actual)
 	require.NoError(t, err, "could not unmarshall actual yaml")
 	require.NotEmpty(t, actual)
 
+	orderData(&expected)
 	assert.EqualValues(t, expected, actual, "yaml should match")
 }
 
