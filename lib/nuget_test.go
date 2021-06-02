@@ -53,8 +53,8 @@ func TestPatchNuget_WithPreviousPackageSourceCredentials(t *testing.T) {
 	password1 := faker.Password()
 
 	source2 := faker.Word()
-	wrong_username2 := faker.Username()
-	wrong_password2 := faker.Password()
+	wrongUsername2 := faker.Username()
+	wrongPassword2 := faker.Password()
 	username2 := faker.Username()
 	password2 := faker.Password()
 
@@ -77,7 +77,7 @@ func TestPatchNuget_WithPreviousPackageSourceCredentials(t *testing.T) {
 </configuration>
 `,
 		source1, username1, password1,
-		source2, wrong_username2, wrong_password2)
+		source2, wrongUsername2, wrongPassword2)
 
 	reader := strings.NewReader(xmlString)
 	buffer := new(bytes.Buffer)

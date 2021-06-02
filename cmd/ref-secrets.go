@@ -7,9 +7,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// linkSecretsCmd represents the linkSecrets command
+// refSecretsCmd represents the linkSecrets command
 var refSecretsCmd = &cobra.Command{
-	Use: "ref-secrets <file-path> <secret-name>",
+	Use:   "ref-secrets <file-path> <secret-name>",
+	Short: "Add secret key reference variable to a yaml file",
+	Long:  "Add secret key reference variable to a yaml file. Tipically a kubernetes Deployment or Pod resource file.",
 	Aliases: []string{
 		"refsecrets",
 		"refsec",

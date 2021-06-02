@@ -53,7 +53,7 @@ func EnvToYaml(r, envr io.Reader, w io.Writer, ypath string) error {
 	return nil
 }
 
-// EnvToYaml fill some yaml node with entries from and .env-formatted file.
+// EnvToYamlFile fill some yaml node with entries from and .env-formatted file.
 // Reads and writes directly into files, instead of readers and writers.
 func EnvToYamlFile(envFilename, yamlFilename, ypath string) error {
 	envReader, err := os.Open(envFilename)
@@ -66,6 +66,7 @@ func EnvToYamlFile(envFilename, yamlFilename, ypath string) error {
 	})
 }
 
+// ReferenceSecrets
 func ReferenceSecrets(r io.Reader, w io.Writer, ypath, secretname, prefix, suffix string) error {
 	d := yaml.NewDecoder(r)
 	var doc interface{}
