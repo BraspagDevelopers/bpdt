@@ -12,7 +12,6 @@ import (
 )
 
 func TestEnvToYaml(t *testing.T) {
-
 	envReader := strings.NewReader(`
 key_2=value_2
 key_3=value 3 with spaces
@@ -80,7 +79,6 @@ items:
 }
 
 func TestReferenceSecrets(t *testing.T) {
-
 	const (
 		secretKeyPrefix = "#{"
 		secretKeySuffix = "}#"
