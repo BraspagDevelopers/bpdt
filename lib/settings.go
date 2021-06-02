@@ -3,7 +3,7 @@ package lib
 import (
 	"io"
 
-	"github.com/BraspagDevelopers/bpdt/lib/config"
+	"github.com/BraspagDevelopers/bpdt/lib/internal/config"
 	"github.com/joho/godotenv"
 	"github.com/palantir/stacktrace"
 )
