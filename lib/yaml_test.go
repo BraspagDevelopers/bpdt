@@ -74,6 +74,7 @@ items:
 	require.NoError(t, err, "could not unmarshall actual yaml")
 	require.NotEmpty(t, actual)
 
+	orderData(&actual)
 	orderData(&expected)
 	assert.EqualValues(t, expected, actual, "yaml should match")
 }
