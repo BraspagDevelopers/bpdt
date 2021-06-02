@@ -19,10 +19,10 @@ func TestExport(t *testing.T) {
 	require.NoError(t, err, "Could not open file2.json")
 	defer file1.Close()
 
-	err = config.AddJsonReader(file1)
+	err = config.AddJSONReader(file1)
 	require.NoError(t, err, "Failed to add file1")
 
-	err = config.AddJsonReader(file2)
+	err = config.AddJSONReader(file2)
 	require.NoError(t, err, "Failed to add file2")
 
 	expected := map[string]string{

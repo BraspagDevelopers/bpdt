@@ -76,8 +76,8 @@ bpdt env-to-yaml <.env-file-path> <yaml-file-path>
 
 
 ### `bpdt ref-secrets`
-Add secret key reference variable to a yaml file.
-Tipically a kubernetes Deployment or Pod resource file.
+Adds a secret key reference variable to a yaml file.
+The file is tipically a kubernetes Deployment or Pod resource file.
 
 ```bash
 bpdt ref-secrets <file-path> <secret-name>
