@@ -3,7 +3,7 @@ package lib
 import (
 	"io"
 
-	"github.com/BraspagDevelopers/bpdt/lib/config"
+	"github.com/BraspagDevelopers/bpdt/lib/internal/config"
 	"github.com/joho/godotenv"
 	"github.com/palantir/stacktrace"
 )
@@ -12,7 +12,7 @@ import (
 func ExportSettings(inputs []io.Reader, output io.Writer) error {
 	config := config.Configuration{}
 	for _, input := range inputs {
-		err := config.AddJsonReader(input)
+		err := config.AddJSONReader(input)
 		if err != nil {
 			return stacktrace.Propagate(err, "Could read configuration from %s", input)
 		}

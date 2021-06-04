@@ -11,9 +11,11 @@ import (
 	"muzzammil.xyz/jsonc"
 )
 
+// Configuration is a map of strings
 type Configuration map[string]string
 
-func (config *Configuration) AddJsonReader(reader io.Reader) error {
+// AddJSONReader loads configuration from a JSON reader
+func (config *Configuration) AddJSONReader(reader io.Reader) error {
 	reader = utfbom.SkipOnly(reader)
 
 	bytes, err := ioutil.ReadAll(reader)

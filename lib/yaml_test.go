@@ -12,7 +12,6 @@ import (
 )
 
 func TestEnvToYaml(t *testing.T) {
-
 	envReader := strings.NewReader(`
 key_2=value_2
 key_3=value 3 with spaces
@@ -75,12 +74,12 @@ items:
 	require.NoError(t, err, "could not unmarshall actual yaml")
 	require.NotEmpty(t, actual)
 
+	orderData(&actual)
 	orderData(&expected)
 	assert.EqualValues(t, expected, actual, "yaml should match")
 }
 
 func TestReferenceSecrets(t *testing.T) {
-
 	const (
 		secretKeyPrefix = "#{"
 		secretKeySuffix = "}#"

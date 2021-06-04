@@ -74,3 +74,23 @@ bpdt env-to-yaml <.env-file-path> <yaml-file-path>
 - **`--directory`, `-d`:** Directory where the files will be looked for
 - **`--ypath`:** A period separated string indicating where in the YAML the variables should be appended
 
+
+### `bpdt ref-secrets`
+Adds a secret key reference variable to a yaml file.
+The file is tipically a kubernetes Deployment or Pod resource file.
+
+```bash
+bpdt ref-secrets <file-path> <secret-name>
+```
+
+#### Arguments
+1. **`<file-path>`:** Path of the _.env_ file
+2. **`<secret-name>`:** Path of the YAML file
+
+#### Flags
+- **`--ypath`:** A period separated string indicating where in the YAML the variables are placed. _Default: `spec.template.spec.containers.0.env`_
+- **`--directory`, `-d`:**: Directory where the files will be looked for. _Default: working directory_
+
+- **`--prefix`, `-p`:** The prefix for the secret variables. _Default: `#<Secret>{`_
+- **`--suffix`, `-s`:** The suffix for the secret variables. _Default: `}#`_
+

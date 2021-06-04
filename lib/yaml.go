@@ -53,7 +53,7 @@ func EnvToYaml(r, envr io.Reader, w io.Writer, ypath string) error {
 	return nil
 }
 
-// EnvToYaml fill some yaml node with entries from and .env-formatted file.
+// EnvToYamlFile fill some yaml node with entries from and .env-formatted file.
 // Reads and writes directly into files, instead of readers and writers.
 func EnvToYamlFile(envFilename, yamlFilename, ypath string) error {
 	envReader, err := os.Open(envFilename)
@@ -66,6 +66,8 @@ func EnvToYamlFile(envFilename, yamlFilename, ypath string) error {
 	})
 }
 
+// ReferenceSecrets adds a secret key reference variable to a yaml file.
+// The file is tipically a kubernetes Deployment or Pod resource file.
 func ReferenceSecrets(r io.Reader, w io.Writer, ypath, secretname, prefix, suffix string) error {
 	d := yaml.NewDecoder(r)
 	var doc interface{}
@@ -115,6 +117,9 @@ func ReferenceSecrets(r io.Reader, w io.Writer, ypath, secretname, prefix, suffi
 	return nil
 }
 
+// ReferenceSecretsFile adds a secret key reference variable to a yaml file.
+// The file is tipically a kubernetes Deployment or Pod resource file.
+// Reads and writes directly into files, instead of readers and writers.
 func ReferenceSecretsFile(path, ypath, secretname, prefix, suffix string) error {
 	return readWrite(path, func(reader io.Reader, writer io.Writer) error {
 		return ReferenceSecrets(reader, writer, ypath, secretname, prefix, suffix)
