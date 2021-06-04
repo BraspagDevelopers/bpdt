@@ -13,5 +13,5 @@ require (
 	github.com/spf13/cobra v1.1.3
 	github.com/stretchr/testify v1.7.0
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776
-	muzzammil.xyz/jsonc v0.0.0-20200627155943-e1c384b63054
+	muzzammil.xyz/jsonc v0.0.0-20201229145248-615b0916ca38
 )
