@@ -29,7 +29,7 @@ func findOrCreateElementWithAttribute(xml *etree.Element, name, attrName, attrVa
 	return el
 }
 
-func setAttribute(xml *etree.Element, name string, value string) *etree.Attr {
+func setAttribute(xml *etree.Element, name, value string) *etree.Attr {
 	if attr := xml.SelectAttr(name); attr != nil {
 		attr.Value = value
 		return attr
