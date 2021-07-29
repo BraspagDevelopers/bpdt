@@ -30,9 +30,9 @@ curl -sf https://gobinaries.com/BraspagDevelopers/bpdt | PREFIX=. sh
 curl -sf https://gobinaries.com/BraspagDevelopers/bpdt | PREFIX=/tmp sh
 ```
 
-### `go get` method
+### `go install` method
 ```bash
-go get -u github.com/BraspagDevelopers/bpdt
+go install github.com/BraspagDevelopers/bpdt@latest
 ```
 
 ## Usage
