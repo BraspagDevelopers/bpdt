@@ -7,7 +7,7 @@ require (
 	github.com/bxcodec/faker/v3 v3.6.0
 	github.com/dimchansky/utfbom v1.1.1
 	github.com/jeremywohl/flatten v1.0.1
-	github.com/joho/godotenv v1.3.0
+	github.com/joho/godotenv v1.4.0
 	github.com/mitchellh/mapstructure v1.4.2
 	github.com/palantir/stacktrace v0.0.0-20161112013806-78658fd2d177
 	github.com/spf13/cobra v1.2.1
