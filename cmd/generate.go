@@ -25,14 +25,14 @@ var generateConfigMapCmd = &cobra.Command{
 		prefix, err := cmd.Flags().GetString("prefix")
 		handleError(err)
 
-		keepPrefix, err := cmd.Flags().GetBool("env")
+		stripPrefix, err := cmd.Flags().GetBool("strip-prefix")
 		handleError(err)
 
 		configMap, err := lib.GenerateConfigMap(lib.GenerateConfigMapParams{
 			Name:            name,
 			FromEnvironment: fromEnv,
 			Prefix:          prefix,
-			KeepPrefix:      keepPrefix,
+			StripPrefix:     stripPrefix,
 		})
 		handleError(err)
 
@@ -45,7 +45,7 @@ func init() {
 	generateCmd.AddCommand(generateConfigMapCmd)
 
 	generateConfigMapCmd.Flags().Bool("env", false, "Load variables from environment")
-	generateConfigMapCmd.Flags().Bool("keep-prefix", false, "Keep the variable name prefix")
+	generateConfigMapCmd.Flags().Bool("strip-prefix", false, "Strip the variable name prefix")
 
 	generateConfigMapCmd.Flags().String("prefix", "", "Filter the variables by this prefix")
 }

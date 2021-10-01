@@ -13,7 +13,7 @@ type GenerateConfigMapParams struct {
 	Name            string
 	FromEnvironment bool
 	Prefix          string
-	KeepPrefix      bool
+	StripPrefix     bool
 }
 
 func (p GenerateConfigMapParams) Validate() error {
@@ -49,7 +49,7 @@ func (p GenerateConfigMapParams) isValidKey(key string) bool {
 }
 
 func (p GenerateConfigMapParams) normalizeKey(key string) string {
-	if !p.KeepPrefix && len(p.Prefix) > 0 {
+	if p.StripPrefix {
 		key = key[len(p.Prefix):]
 	}
 	return key
