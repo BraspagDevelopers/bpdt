@@ -13,7 +13,7 @@ var generateCmd = &cobra.Command{
 }
 
 var generateConfigMapCmd = &cobra.Command{
-	Use:   "configmap",
+	Use:   "configmap <name-on-manifest>",
 	Short: "Generate a ConfigMap manifest",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

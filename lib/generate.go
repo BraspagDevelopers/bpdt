@@ -18,8 +18,9 @@ type GenerateConfigMapParams struct {
 
 func (p GenerateConfigMapParams) Validate() error {
 	if !p.FromEnvironment {
-		return errors.New("environment is the only source for now")
+		return errors.New("environment is the only source for now but was not specified")
 	}
+	return nil
 }
 
 func (p GenerateConfigMapParams) getVariables() (map[string]string, error) {
@@ -55,13 +56,13 @@ func (p GenerateConfigMapParams) normalizeKey(key string) string {
 }
 
 func (p GenerateConfigMapParams) marshalConfigMap(dataMap map[string]string) (string, error) {
-	manifest := map[string]interface{}{
-		"apiVersion": "v1",
-		"kind":       "ConfigMap",
-		"metadata": map[string]string{
+	manifest := yaml.MapSlice{
+		{"apiVersion", "v1"},
+		{"kind", "ConfigMap"},
+		{"metadata", map[string]string{
 			"name": p.Name,
-		},
-		"data": dataMap,
+		}},
+		{"data", dataMap},
 	}
 	data, err := yaml.Marshal(manifest)
 	if err != nil {
