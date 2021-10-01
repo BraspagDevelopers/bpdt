@@ -9,7 +9,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/mitchellh/mapstructure"
 	"github.com/palantir/stacktrace"
-	"gopkg.in/yaml.v3"
+	"gopkg.in/yaml.v2"
 )
 
 // EnvToYaml fill some yaml node with entries from and .env-formatted file
