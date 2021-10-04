@@ -55,23 +55,6 @@ func (p GenerateConfigMapParams) normalizeKey(key string) string {
 	return key
 }
 
-func (p GenerateConfigMapParams) marshalConfigMap(dataMap map[string]string) (string, error) {
-	manifest := yaml.MapSlice{
-		{"apiVersion", "v1"},
-		{"kind", "ConfigMap"},
-		{"metadata", map[string]string{
-			"name": p.Name,
-		}},
-		{"data", dataMap},
-	}
-	data, err := yaml.Marshal(manifest)
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
-}
-
 func GenerateConfigMap(params GenerateConfigMapParams) (string, error) {
 	err := params.Validate()
 	if err != nil {
@@ -83,5 +66,22 @@ func GenerateConfigMap(params GenerateConfigMapParams) (string, error) {
 		return "", err
 	}
 
-	return params.marshalConfigMap(envVars)
+	return generateConfigMap(params.Name, envVars)
+}
+
+func generateConfigMap(name string, data map[string]string) (string, error) {
+	manifest := yaml.MapSlice{
+		{"apiVersion", "v1"},
+		{"kind", "ConfigMap"},
+		{"metadata", map[string]string{
+			"name": name,
+		}},
+		{"data", data},
+	}
+	bytes, err := yaml.Marshal(manifest)
+	if err != nil {
+		return "", err
+	}
+
+	return string(bytes), nil
 }
