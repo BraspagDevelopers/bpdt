@@ -14,6 +14,7 @@ type GenerateConfigMapParams struct {
 	FromEnvironment bool
 	Prefix          string
 	StripPrefix     bool
+	IgnoreCase      bool
 }
 
 func (p GenerateConfigMapParams) Validate() error {
@@ -45,6 +46,10 @@ func (p GenerateConfigMapParams) getVariables() (map[string]string, error) {
 }
 
 func (p GenerateConfigMapParams) isValidKey(key string) bool {
+	if p.IgnoreCase {
+		key = strings.ToLower(key)
+		p.Prefix = strings.ToLower(p.Prefix)
+	}
 	return strings.HasPrefix(key, p.Prefix)
 }
 
