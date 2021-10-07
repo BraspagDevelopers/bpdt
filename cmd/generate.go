@@ -28,11 +28,15 @@ var generateConfigMapCmd = &cobra.Command{
 		stripPrefix, err := cmd.Flags().GetBool("strip-prefix")
 		handleError(err)
 
+		ignoreCase, err := cmd.Flags().GetBool("ignore-case")
+		handleError(err)
+
 		configMap, err := lib.GenerateConfigMap(lib.GenerateConfigMapParams{
 			Name:            name,
 			FromEnvironment: fromEnv,
 			Prefix:          prefix,
 			StripPrefix:     stripPrefix,
+			IgnoreCase:      ignoreCase,
 		})
 		handleError(err)
 
@@ -45,7 +49,7 @@ func init() {
 	generateCmd.AddCommand(generateConfigMapCmd)
 
 	generateConfigMapCmd.Flags().Bool("env", false, "Load variables from environment")
-	generateConfigMapCmd.Flags().Bool("strip-prefix", false, "Strip the variable name prefix")
-
 	generateConfigMapCmd.Flags().String("prefix", "", "Filter the variables by this prefix")
+	generateConfigMapCmd.Flags().Bool("strip-prefix", false, "Strip the variable name prefix")
+	generateConfigMapCmd.Flags().BoolP("ignore-case", "i", false, "Ignore  case  distinctions when filtering variable names")
 }
