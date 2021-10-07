@@ -29,4 +29,4 @@ jobs:
 
       - name: Upload coverage to Codecov
         run: bash <(curl -s https://codecov.io/bash)
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest' && matrix.go-version == '1.16.x'
