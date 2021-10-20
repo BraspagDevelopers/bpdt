@@ -1,0 +1,20 @@
+on: 
+  release:
+    types: [created]
+
+jobs:
+  release:
+    strategy:
+      matrix:
+        arch: [ darwin, linux, windows ]
+        os: [ 386, arm, amd64, arm64 ]
+    steps:
+      name: release ${{ matrix.os }}/${{ matrix.arch }}
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - uses: wangyoucao577/go-release-action@v1.20
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: ${{ matrix.os }}
+          goarch: ${{ matrix.arch }}
