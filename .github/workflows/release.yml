@@ -1,0 +1,20 @@
+on: 
+  release:
+    types: [created]
+
+jobs:
+  release:
+    strategy:
+      matrix:
+        os: [ darwin, linux, windows ]
+        arch: [ amd64, 386, arm64, arm, ]
+    name: release ${{ matrix.os }}/${{ matrix.arch }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: wangyoucao577/go-release-action@v1.20
+        if: matrix.os != 'darwin' || matrix.arch != '386' && matrix.arch != 'arm'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: ${{ matrix.os }}
+          goarch: ${{ matrix.arch }}
