@@ -5,7 +5,7 @@ go 1.14
 require (
 	github.com/beevik/etree v1.1.0
 	github.com/brianvoe/gofakeit/v6 v6.9.0
-	github.com/bxcodec/faker/v3 v3.6.0
+	github.com/bxcodec/faker/v3 v3.7.0
 	github.com/dimchansky/utfbom v1.1.1
 	github.com/jeremywohl/flatten v1.0.1
 	github.com/joho/godotenv v1.4.0
