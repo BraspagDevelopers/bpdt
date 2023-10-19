@@ -11,7 +11,7 @@ jobs:
     name: release ${{ matrix.os }}/${{ matrix.arch }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: wangyoucao577/go-release-action@v1.20
         if: matrix.os != 'darwin' || matrix.arch != '386' && matrix.arch != 'arm'
         with:
